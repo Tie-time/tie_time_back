@@ -27,7 +27,9 @@ export const getUserByEmail = async (email: string): Promise<User | null> => {
 export const getUserById = async (id: string): Promise<User | null> => {
   try {
     return await userRepository.findOne({
+      select: ["email", "role", "pseudo", "id"],
       where: { id },
+      relations: ["role"],
     });
   } catch (error) {
     return null;

@@ -18,21 +18,18 @@ router.post("/signup", async (req: Request, res: Response) => {
       throw new Error("Role doesn't exist");
     }
 
+    const user = await service.getUserByEmail(userData.email);
+
+    if (user !== null) {
+      throw new Error("This email is already linked to an account");
+    }
+
     userData.password = hashedPassword;
     userData.role = role;
 
     await service.createUser(userData);
-
     res.status(201).send({ success: "Your account successfully created" });
   } catch (error: any) {
-    switch (error.code) {
-      case "23505":
-        error.message = "This email is already linked to an account";
-        break;
-      default:
-        error.message = "An error occurred";
-        break;
-    }
     res.status(400).send({ error: error.message });
   }
 });
@@ -56,7 +53,6 @@ router.post("/signin", async (req: Request, res: Response) => {
     }
 
     const payload = {
-      userId: user.id,
       email: user.email,
       role: user.role.label,
     };
@@ -73,9 +69,6 @@ router.post("/signin", async (req: Request, res: Response) => {
 
     res.status(200).send({
       token,
-      role: user.role.label,
-      id: user.id,
-      pseudo: user.pseudo,
     });
   } catch (error: any) {
     res.status(404).send({ error: error.message });

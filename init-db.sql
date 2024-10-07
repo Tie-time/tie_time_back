@@ -18,7 +18,7 @@ CREATE TABLE `role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- -------------------------------------------------------------
--- ROLE TABLE DATA
+-- ROLE TABLE INSERTS
 -- -------------------------------------------------------------
 INSERT INTO `role` (`label`) VALUES ('admin'), ('user');
 
@@ -45,14 +45,16 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
--- Insertion de 5 utilisateurs, dont un admin
--- INSERT INTO `user` (`id`, `email`, `password`, `pseudo`, `roleId`) 
--- VALUES 
---   (UUID(), 'admin-tie-time@gmail.com.com', 'hashed_password_admin', 'admin_user', 1), -- Admin
---   (UUID(), 'user1@example.com', 'hashed_password_user1', 'user_one', 2),   -- User 
---   (UUID(), 'user2@example.com', 'hashed_password_user2', 'user_two', 2),   -- User 
---   (UUID(), 'user3@example.com', 'hashed_password_user3', 'user_three', 2), -- User 
---   (UUID(), 'user4@example.com', 'hashed_password_user4', 'user_four', 2);  -- User
+-- -------------------------------------------------------------
+-- USER TABLE INSERTS
+-- -------------------------------------------------------------
+INSERT INTO `user` (`id`, `email`, `password`, `pseudo`, `roleId`) 
+VALUES 
+  (UUID(), 'admin-tie-time@gmail.com', '$2a$10$uNA8RW7GMd1OySe5AHtGleNFzwWEti1Sxi4GFAbGZNgku6kLBIJmq', 'admin_user', 1), -- Admin
+  (UUID(), 'user1@gmail.com', '$2a$10$d1CFc.d3oqEQLo4PWJWbzOqG/60CmqeYsktOaIWkVOCwJ5pIxNDxi', 'user_one', 2),   -- User 
+  (UUID(), 'user2@gmail.com', '$2a$10$d1CFc.d3oqEQLo4PWJWbzOqG/60CmqeYsktOaIWkVOCwJ5pIxNDxi', 'user_two', 2),   -- User 
+  (UUID(), 'user3@gmail.com', '$2a$10$d1CFc.d3oqEQLo4PWJWbzOqG/60CmqeYsktOaIWkVOCwJ5pIxNDxi', 'user_three', 2), -- User 
+  (UUID(), 'user4@gmail.com', '$2a$10$d1CFc.d3oqEQLo4PWJWbzOqG/60CmqeYsktOaIWkVOCwJ5pIxNDxi', 'user_four', 2);  -- User
 
 -- -------------------------------------------------------------
 -- 

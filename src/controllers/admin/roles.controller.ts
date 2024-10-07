@@ -3,7 +3,7 @@ import * as service from "../../services/roles.service";
 
 const router = express.Router();
 
-router.post("/create", async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
   try {
     const roleData = req.body;
     await service.createRole(roleData);

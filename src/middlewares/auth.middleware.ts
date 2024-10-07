@@ -4,7 +4,10 @@ import { RoleEnum } from "../enums/RoleEnum";
 import * as service from "../services/users.service";
 
 /* If no roles is passed to the authMiddleware all roles are accepted for authorization */
-export const authMiddleware = ({ selfOnly = false, roles }: { selfOnly?: boolean, roles?: RoleEnum[] } = {}) => {
+export const authMiddleware = ({
+  selfOnly = false,
+  roles,
+}: { selfOnly?: boolean; roles?: RoleEnum[] } = {}) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     // Format token because we receive "Bearer token"
     const token = req.headers.authorization?.split(" ")[1];
@@ -28,7 +31,7 @@ export const authMiddleware = ({ selfOnly = false, roles }: { selfOnly?: boolean
       }
 
       // Get connected user
-      const user = await service.getUserById(decodedToken.userId);
+      const user = await service.getUserByEmail(decodedToken.email);
 
       if (user === null) {
         throw new Error("No user found");
