@@ -71,7 +71,7 @@ router.post("/signin", async (req: Request, res: Response) => {
       token,
     });
   } catch (error: any) {
-    res.status(404).send({ error: error.message });
+    res.status(403).send({ error: error.message });
   }
 });
 
