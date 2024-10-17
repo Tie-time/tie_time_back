@@ -15,20 +15,20 @@ router.post("/signup", async (req: Request, res: Response) => {
     const role = await roleService.getRoleByLabel(RoleEnum.USER);
 
     if (role === null) {
-      throw new Error("Role doesn't exist");
+      throw new Error("Rôle introuvable");
     }
 
     const user = await service.getUserByEmail(userData.email);
 
     if (user !== null) {
-      throw new Error("This email is already linked to an account");
+      throw new Error("Cet email est déjà lié à un compte");
     }
 
     userData.password = hashedPassword;
     userData.role = role;
 
     await service.createUser(userData);
-    res.status(201).send({ success: "Your account successfully created" });
+    res.status(201).send({ success: "Votre compte à été créé avec succès" });
   } catch (error: any) {
     res.status(400).send({ error: error.message });
   }
@@ -40,7 +40,7 @@ router.post("/signin", async (req: Request, res: Response) => {
     const user = await service.getUserByEmail(userData.email);
 
     if (user === null) {
-      throw new Error("Bad credentials");
+      throw new Error("Identifiants incorects");
     }
 
     const verifyPassword = await bcrypt.compare(
@@ -49,7 +49,7 @@ router.post("/signin", async (req: Request, res: Response) => {
     );
 
     if (!verifyPassword) {
-      throw new Error("Bad credentials");
+      throw new Error("Identifiants incorects");
     }
 
     const payload = {
@@ -62,7 +62,7 @@ router.post("/signin", async (req: Request, res: Response) => {
     console.log("JWT_SECRET", JWT_SECRET);
 
     if (JWT_SECRET === undefined || JWT_SECRET === null) {
-      throw new Error("No JWT secret provide");
+      throw new Error("Token non définit");
     }
 
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: 846000 });
@@ -82,11 +82,11 @@ router.get(
     try {
       const id = req.userConnected?.id;
       if (!id) {
-        return res.status(401).send({ error: "Not authorized" });
+        return res.status(401).send({ error: "Non authorisé" });
       }
       const user = await service.getUserById(id);
       if (!user) {
-        res.status(404).send({ error: "User not found" });
+        res.status(404).send({ error: "Utilisateur introuvable" });
       }
       res.status(200).send(user);
     } catch (error: any) {
