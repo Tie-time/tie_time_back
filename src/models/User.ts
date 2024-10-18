@@ -3,10 +3,12 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { Role } from "./Role";
+import { Task } from "./Task";
 
 @Entity()
 export class User {
@@ -14,10 +16,10 @@ export class User {
   id: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @Column({ unique: true })
   email: string;
@@ -30,4 +32,7 @@ export class User {
 
   @ManyToOne(() => Role, (role) => role.users)
   role: Role;
+
+  @OneToMany(() => Task, (task) => task.created_by)
+  tasks: Task[];
 }
