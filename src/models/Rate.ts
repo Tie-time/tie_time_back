@@ -7,30 +7,28 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { User } from "./User";
+import { TypeRate } from "./TypeRate";
 
 @Entity()
-export class Task {
+export class Rate {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 
-  @Column({ length: 200 })
-  title: string;
-
-  @Column()
-  is_checked: boolean;
+  @Column({ type: "float", precision: 2, scale: 1 })
+  score: number;
 
   @Column()
   date: Date;
 
-  @Column({ width: 2 })
-  order: number;
-
   @ManyToOne(() => User, (user) => user.id)
   created_by: User;
+
+  @ManyToOne(() => TypeRate, (typeRate) => typeRate.id)
+  id_type_rate: TypeRate;
 }

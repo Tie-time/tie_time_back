@@ -2,6 +2,8 @@ import { DataSource } from "typeorm";
 import { Role } from "../models/Role";
 import { User } from "../models/User";
 import { Task } from "../models/Task";
+import { Rate } from "../models/Rate";
+import { TypeRate } from "../models/TypeRate";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -12,7 +14,7 @@ export const AppDataSource = new DataSource({
   database: process.env.MYSQL_DATABASE,
   synchronize: true,
   logging: true,
-  entities: [User, Role, Task],
+  entities: [User, Role, Task, Rate, TypeRate],
   subscribers: [],
   migrations: [],
 });
