@@ -14,12 +14,17 @@ router.post(
     try {
       const taskData = req.body;
 
-      const userConnected = req.userConnected;
+      const userConnected = req.userConnected as User;
 
       // TODO création de l'incrément order automatique
+      const maxOrder = await service.getMyTasksCountByDate(
+        userConnected,
+        taskData.date
+      );
 
-      taskData.created_by = userConnected as User;
+      taskData.created_by = userConnected;
       taskData.is_checked = false;
+      taskData.order = maxOrder + 1;
 
       await service.createTask(taskData);
       res.status(201).send({ success: "Tâche créée avec succès" });

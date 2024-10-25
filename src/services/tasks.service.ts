@@ -33,6 +33,16 @@ export const getMyTasksByDate = async (
   return tasks;
 };
 
+export const getMyTasksCountByDate = async (
+  created_by: User,
+  date: Date
+): Promise<number> => {
+  const count = await TaskRepository.count({
+    where: { created_by: { id: created_by.id }, date },
+  });
+  return count;
+};
+
 export const createTask = async (data: Task): Promise<Task> => {
   const newTask = await TaskRepository.save(data);
   return newTask;
