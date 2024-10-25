@@ -57,7 +57,7 @@ export const authMiddleware = ({
       next();
     } catch (error: any) {
       console.log(error.message);
-      return res.status(401).json({ message: "Not authorized" });
+      return res.status(401).json({ message: "Non authorisé" });
     }
   };
 };
