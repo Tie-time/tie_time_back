@@ -33,6 +33,6 @@ export class Task {
   @Column({ width: 2 })
   order: number;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.tasks)
   created_by: User;
 }
