@@ -1,3 +1,4 @@
+import { FindOptions, FindOptionsSelect, UpdateResult } from "typeorm";
 import { AppDataSource } from "../database/data-source";
 import { Task } from "../models/Task";
 import { User } from "../models/User";
@@ -46,4 +47,34 @@ export const getMyTasksCountByDate = async (
 export const createTask = async (data: Task): Promise<Task> => {
   const newTask = await TaskRepository.save(data);
   return newTask;
+};
+
+export const checkTask = async (id: string): Promise<Task | null> => {
+  const task = await TaskRepository.findOneBy({ id });
+
+  if (!task) {
+    return null; // Tâche non trouvée
+  }
+
+  // Sauvegarder les modifications
+  const updatedTask = await TaskRepository.save(task);
+  return updatedTask;
+};
+
+export const updateTask = async (
+  id: string,
+  taskData: Partial<Task>
+): Promise<UpdateResult> => {
+  const updatedTask = await TaskRepository.update({ id }, taskData);
+  return updatedTask;
+};
+
+export const getMyTaskById = async (
+  created_by: User,
+  id: string
+): Promise<Task | null> => {
+  const task = await TaskRepository.findOne({
+    where: { created_by: { id: created_by.id }, id },
+  });
+  return task;
 };

@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import * as service from "../../services/tasks.service";
-import { TasksFilter } from "../../types/express/filters/tasks.filter";
+import { TasksFilter } from "../../types/tasks/filters/tasks.filter";
 
 const router = express.Router();
 
