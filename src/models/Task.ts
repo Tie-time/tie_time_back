@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -9,6 +10,7 @@ import {
 import { User } from "./User";
 
 @Entity()
+@Index(["date", "order"], { unique: true })
 export class Task {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -31,6 +33,6 @@ export class Task {
   @Column({ width: 2 })
   order: number;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.tasks)
   created_by: User;
 }

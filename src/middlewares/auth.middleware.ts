@@ -13,7 +13,7 @@ export const authMiddleware = ({
     const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-      return res.status(401).json({ error: "Missing authorization token" });
+      throw new Error("No token provided");
     }
 
     try {
@@ -57,7 +57,7 @@ export const authMiddleware = ({
       next();
     } catch (error: any) {
       console.log(error.message);
-      return res.status(401).json({ message: "Not authorized" });
+      return res.status(401).json({ message: "Non authorisé" });
     }
   };
 };
