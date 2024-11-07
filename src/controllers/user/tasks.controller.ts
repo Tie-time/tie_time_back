@@ -4,9 +4,8 @@ import { RoleEnum } from "../../enums/RoleEnum";
 import { authMiddleware } from "../../middlewares/auth.middleware";
 import { User } from "../../models/User";
 import { TasksFilter } from "../../types/tasks/filters/tasks.filter";
-import { FindOptionsSelect } from "typeorm";
-import { Task } from "../../models/Task";
-import { HttpError } from "../../errors/HTTPError";
+import { HttpError } from "../../errors/HttpError";
+import { getDateWithoutTime } from "../../helpers/date/date.helpers";
 
 const router = express.Router();
 
@@ -52,11 +51,15 @@ router.get(
         date: new Date(query.date as string),
       };
 
+      console.log("tasksFilter", tasksFilter);
+
+      const formattedDate: Date = getDateWithoutTime(tasksFilter.date);
+
       const userConnected = req.userConnected as User;
 
       const tasks = await service.getMyTasksByDate(
         userConnected,
-        tasksFilter.date
+        formattedDate
       );
 
       res.status(200).send(tasks);
