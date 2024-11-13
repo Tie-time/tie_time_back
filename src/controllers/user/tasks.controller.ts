@@ -18,13 +18,16 @@ router.post(
 
       const userConnected = req.userConnected as User;
 
+      const formattedDate: Date = getDateWithoutTime(new Date(taskData.date));
+
       // create auto-increment order
       const maxOrder = await service.getMyTasksCountByDate(
         userConnected,
-        taskData.date
+        formattedDate
       );
 
       taskData.created_by = userConnected;
+      taskData.date = formattedDate.toISOString();
       taskData.is_checked = false;
       taskData.order = maxOrder + 1;
 
@@ -50,8 +53,6 @@ router.get(
       const tasksFilter: TasksFilter = {
         date: new Date(query.date as string),
       };
-
-      console.log("tasksFilter", tasksFilter);
 
       const formattedDate: Date = getDateWithoutTime(tasksFilter.date);
 
@@ -88,9 +89,50 @@ router.put(
         is_checked: !task.is_checked,
       });
 
-      console.log("id", id);
-      console.log("task", task);
-      console.log("taskUpdated", taskUpdated);
+      if (!taskUpdated) {
+        throw new Error("Échec de la mise à jour de la tâche");
+      }
+
+      res.status(200).send({ success: "Tâche mise à jour avec succès" });
+    } catch (error: any) {
+      const statusCode = error.statusCode || 500;
+      res.status(statusCode).send({ error: error.message });
+    }
+  }
+);
+
+router.put(
+  "/:id",
+  authMiddleware({ roles: [RoleEnum.USER, RoleEnum.ADMIN] }),
+  async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const possibleFields = ["title"];
+      const fields = Object.keys(req.body);
+      const isValidOperation = fields.every((field) =>
+        possibleFields.includes(field)
+      );
+
+      if (!isValidOperation) {
+        throw new Error(
+          `Champs invalides, les champs possible sont: ${possibleFields.join(
+            ", "
+          )}`
+        );
+      }
+
+      const taskData = req.body;
+
+      const userConnected = req.userConnected as User;
+
+      const task = await service.getMyTaskById(userConnected, id);
+
+      if (!task) {
+        throw new HttpError(404, "Tâche non trouvée");
+      }
+
+      const taskUpdated = await service.updateTask(id, taskData);
+
       if (!taskUpdated) {
         throw new Error("Échec de la mise à jour de la tâche");
       }
