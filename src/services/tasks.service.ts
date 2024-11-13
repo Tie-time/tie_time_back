@@ -1,4 +1,4 @@
-import { FindOptions, FindOptionsSelect, UpdateResult } from "typeorm";
+import { DeleteResult, UpdateResult } from "typeorm";
 import { AppDataSource } from "../database/data-source";
 import { Task } from "../models/Task";
 import { User } from "../models/User";
@@ -77,4 +77,9 @@ export const getMyTaskById = async (
     where: { created_by: { id: created_by.id }, id },
   });
   return task;
+};
+
+export const deleteTask = async (id: string): Promise<DeleteResult> => {
+  const deletedTask = await TaskRepository.delete({ id });
+  return deletedTask;
 };
