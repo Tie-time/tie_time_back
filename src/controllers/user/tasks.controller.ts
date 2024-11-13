@@ -145,4 +145,35 @@ router.put(
   }
 );
 
+router.delete(
+  "/:id",
+  authMiddleware({ roles: [RoleEnum.USER, RoleEnum.ADMIN] }),
+  async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+
+      const taskData = req.body;
+
+      const userConnected = req.userConnected as User;
+
+      const task = await service.getMyTaskById(userConnected, id);
+
+      if (!task) {
+        throw new HttpError(404, "Tâche non trouvée");
+      }
+
+      const taskDeleted = await service.deleteTask(id);
+
+      if (!taskDeleted) {
+        throw new Error("Échec lors de la suppresion de la tâche");
+      }
+
+      res.status(201).send({ success: "Tâche supprimée avec succès" });
+    } catch (error: any) {
+      const statusCode = error.statusCode || 500;
+      res.status(statusCode).send({ error: error.message });
+    }
+  }
+);
+
 export default router;
