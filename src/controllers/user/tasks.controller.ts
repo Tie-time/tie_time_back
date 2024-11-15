@@ -31,8 +31,10 @@ router.post(
       taskData.is_checked = false;
       taskData.order = maxOrder + 1;
 
-      await service.createTask(taskData);
-      res.status(201).send({ success: "Tâche créée avec succès" });
+      const taskCreated = await service.createTask(taskData);
+      res
+        .status(201)
+        .send({ success: "Tâche créée avec succès", task: taskCreated });
     } catch (error: any) {
       res.status(500).send({ error: error.message });
     }
