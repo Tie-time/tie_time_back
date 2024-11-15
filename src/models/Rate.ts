@@ -15,10 +15,10 @@ export class Rate {
   id: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @Column({ type: "float", precision: 2, scale: 1 })
   score: number;
@@ -30,5 +30,5 @@ export class Rate {
   created_by: User;
 
   @ManyToOne(() => TypeRate, (typeRate) => typeRate.id)
-  id_type_rate: TypeRate;
+  type_rate: TypeRate;
 }
