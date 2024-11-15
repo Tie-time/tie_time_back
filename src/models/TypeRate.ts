@@ -14,6 +14,6 @@ export class TypeRate {
   @Column({ width: 2 })
   out_of: number;
 
-  @OneToMany(() => Rate, (rate) => rate.id_type_rate)
+  @OneToMany(() => Rate, (rate) => rate.type_rate)
   rates: User[];
 }
