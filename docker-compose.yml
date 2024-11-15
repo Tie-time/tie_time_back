@@ -8,7 +8,8 @@ services:
     env_file:
       - .env
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     volumes:
       - ./src/:/app/src
 
@@ -20,12 +21,17 @@ services:
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql # Fichier SQL pour l'initialisation
     env_file:
       - .env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - "5050:80"
-    env_file:
-      - .env
-    depends_on:
-      - mysql
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   ports:
+  #     - "5050:80"
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - mysql
