@@ -26,11 +26,19 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 async function bootstrap(): Promise<void> {
   try {
     // Connexion à la base de donnée (Attente de la connexion avant de passer à la suite)
-    await AppDataSource.initialize().then(() => {
-      console.log("DB connected");
+    await AppDataSource.initialize().then(async () => {
+      console.info("DB connected!");
+      // Synchronize the database schema
+      await AppDataSource.synchronize();
+      console.info("Schema synchronized!");
+
+      // Run migrations
+      await AppDataSource.runMigrations();
+      console.info("Migrations passed!");
+
       // Start Express server
       const server = app.listen(port, () => {
-        console.log(`Server is running on http://localhost:${port}`);
+        console.info(`Server is running on http://localhost:${port}`);
       });
     });
   } catch (error) {
