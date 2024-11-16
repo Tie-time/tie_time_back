@@ -17,8 +17,6 @@ services:
     image: mysql:latest
     ports:
       - "4000:3306"
-    volumes:
-      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql # Fichier SQL pour l'initialisation
     env_file:
       - .env
     healthcheck:
