@@ -4,6 +4,7 @@ import { TypeRateEnum } from "../enums/TypeRateEnum";
 import { Rate } from "./Rate";
 import { PassionEnum } from "../enums/PassionEnum";
 import { url } from "inspector";
+import { PassionCheckedBy } from "./PassionCheckedBy";
 
 @Entity()
 export class Passion {
@@ -14,8 +15,11 @@ export class Passion {
   label: PassionEnum;
 
   @Column({ type: "varchar", length: 255 })
-  iconUrl: string;
+  icon_url: string;
 
-  @OneToMany(() => Rate, (rate) => rate.type_rate)
-  rates: User[];
+  @OneToMany(
+    () => PassionCheckedBy,
+    (passionCheckedBy) => passionCheckedBy.passion
+  )
+  checkedBy: PassionCheckedBy[];
 }

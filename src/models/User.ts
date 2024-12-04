@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { Role } from "./Role";
 import { Task } from "./Task";
+import { PassionCheckedBy } from "./PassionCheckedBy";
 
 @Entity()
 export class User {
@@ -35,4 +36,10 @@ export class User {
 
   @OneToMany(() => Task, (task) => task.created_by)
   tasks: Task[];
+
+  @OneToMany(
+    () => PassionCheckedBy,
+    (passionCheckedBy) => passionCheckedBy.checked_by
+  )
+  passions: PassionCheckedBy[];
 }
