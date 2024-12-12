@@ -22,7 +22,7 @@ export const getMyPassionsWithCheckedStatusByDate = async (
     .select([
       "passion.id as id",
       "passion.label as label",
-      "passion.icon_url as icon_url",
+      "passion.icon_path as icon_path",
       "CASE WHEN pcb.id IS NOT NULL THEN true ELSE false END as is_checked",
     ])
     .orderBy("passion.id", "ASC")

@@ -15,7 +15,7 @@ export class Passion {
   label: PassionEnum;
 
   @Column({ type: "varchar", length: 255 })
-  icon_url: string;
+  icon_path: string;
 
   @OneToMany(
     () => PassionCheckedBy,
