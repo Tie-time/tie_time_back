@@ -4,6 +4,8 @@ import { User } from "../models/User";
 import { Task } from "../models/Task";
 import { Rate } from "../models/Rate";
 import { TypeRate } from "../models/TypeRate";
+import { PassionCheckedBy } from "../models/PassionCheckedBy";
+import { Passion } from "../models/Passion";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -14,7 +16,7 @@ export const AppDataSource = new DataSource({
   database: process.env.MYSQL_DATABASE,
   synchronize: true,
   logging: true,
-  entities: [User, Role, Task, Rate, TypeRate],
+  entities: [User, Role, Task, Rate, TypeRate, Passion, PassionCheckedBy],
   subscribers: [],
   migrations: ["src/migration/**/*.ts"],
 });

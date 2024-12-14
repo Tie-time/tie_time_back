@@ -2,36 +2,28 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Index,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { User } from "./User";
+import { TypeRate } from "./TypeRate";
+import { Passion } from "./Passion";
 
 @Entity()
-export class Task {
+export class PassionCheckedBy {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  @Column({ length: 200 })
-  title: string;
-
-  @Column()
-  is_checked: boolean;
-
   @Column()
   date: Date;
 
-  @Column({ width: 2 })
-  order: number;
+  @ManyToOne(() => User, (user) => user.id)
+  checked_by: User;
 
-  @ManyToOne(() => User, (user) => user.tasks)
-  created_by: User;
+  @ManyToOne(() => Passion, (passion) => passion.id)
+  passion: Passion;
 }

@@ -14,6 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const port = process.env.PORT || 5001;
 
+// Configuration des fichiers statiques
+app.use(express.static("public"));
+
 // Montez les routes des utilisateurs et des conversations sur votre application
 app.use("/admin/api", authMiddleware({ roles: [RoleEnum.ADMIN] }), adminRouter);
 app.use("/api", userRouter);
