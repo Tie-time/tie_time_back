@@ -6,14 +6,14 @@ export class SeedPassion1733294907264 implements MigrationInterface {
       `-- Seed Data 
               INSERT INTO passion (label, icon_path) VALUES
               ('gaming', '/icons/game_controller.svg'),
-              ('cooking', '/icons/game_controller.svg'),
-              ('gardening', '/icons/game_controller.svg'),
-              ('board-gaming', '/icons/game_controller.svg'),
-              ('painting', '/icons/game_controller.svg'),
-              ('music', '/icons/game_controller.svg'),
-              ('reading', '/icons/game_controller.svg'),
-              ('sport', '/icons/game_controller.svg'),
-              ('movie', '/icons/game_controller.svg');
+              ('cooking', '/icons/cook.svg'),
+              ('gardening', '/icons/leaf.svg'),
+              ('board-gaming', '/icons/dice.svg'),
+              ('painting', '/icons/paint.svg'),
+              ('music', '/icons/music.svg'),
+              ('reading', '/icons/book.svg'),
+              ('sport', '/icons/dribble.svg'),
+              ('movie', '/icons/cinema.svg');
               `
     );
   }
