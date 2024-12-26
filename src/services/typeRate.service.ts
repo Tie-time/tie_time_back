@@ -22,10 +22,10 @@ export const getMyRateWithScoreByDate = async (userId: string, date: Date) => {
       { userId, date }
     )
     .select([
-      "type_rate.id as id",
+      "rate.id as id",
       "type_rate.label as label",
       "type_rate.out_of as out_of",
-      "rate.id as rate_id",
+      "type_rate.id as type_rate_id",
       "rate.score as score",
     ])
     .orderBy("type_rate.id", "ASC")

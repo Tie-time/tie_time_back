@@ -9,7 +9,10 @@ export class TypeRate {
   id: number;
 
   @Column({ type: "enum", enum: TypeRateEnum })
-  label: TypeRateEnum;
+  code: TypeRateEnum;
+
+  @Column({ type: "varchar", length: 100 })
+  label: string;
 
   @Column({ width: 2 })
   out_of: number;
