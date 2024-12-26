@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -10,6 +11,7 @@ import { User } from "./User";
 import { TypeRate } from "./TypeRate";
 
 @Entity()
+@Index("IDX_DATE_RATE_TYPE", ["date", "type_rate"], { unique: true })
 export class Rate {
   @PrimaryGeneratedColumn("uuid")
   id: string;
