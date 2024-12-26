@@ -14,6 +14,9 @@ export class TypeRate {
   @Column({ type: "varchar", length: 100 })
   label: string;
 
+  @Column({ type: "text" })
+  description: string;
+
   @Column({ width: 2 })
   out_of: number;
 

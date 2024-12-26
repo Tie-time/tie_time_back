@@ -4,9 +4,9 @@ export class SeedTypeRate1731719495457 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `-- Seed Data 
-            INSERT INTO type_rate (code, label, out_of) VALUES
-            ('self-esteem', 'Éstime de soi', 5),
-            ('satisfaction', 'Satisfaction', 5);
+            INSERT INTO type_rate (code, label, description, out_of) VALUES
+            ('self-esteem', 'Éstime de soi', 'Appréciation de ta propre valeur' , 5),
+            ('satisfaction', 'Satisfaction', 'Valeur que tu donnes à cette journée', 5);
             `
     );
   }
