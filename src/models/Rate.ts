@@ -22,7 +22,7 @@ export class Rate {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @Column({ type: "float", precision: 2, scale: 1 })
+  @Column()
   score: number;
 
   @Column()
