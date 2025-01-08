@@ -1,4 +1,4 @@
-import { UpdateResult } from "typeorm";
+import { DeleteResult, UpdateResult } from "typeorm";
 import { AppDataSource } from "../database/data-source";
 import { Rate } from "../models/Rate";
 import { User } from "../models/User";
@@ -26,4 +26,9 @@ export const updateRate = async (
 ): Promise<UpdateResult> => {
   const updatedRate = await rateRepository.update({ id }, rateData);
   return updatedRate;
+};
+
+export const deleteRate = async (id: string): Promise<DeleteResult> => {
+  const deletedTask = await rateRepository.delete({ id });
+  return deletedTask;
 };

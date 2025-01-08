@@ -113,4 +113,33 @@ router.put(
   }
 );
 
+router.delete(
+  "/:id",
+  authMiddleware({ roles: [RoleEnum.USER, RoleEnum.ADMIN] }),
+  async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+
+      const userConnected = req.userConnected as User;
+
+      const rate = await rateService.getMyRateById(userConnected, id);
+
+      if (!rate) {
+        throw new HttpError(404, "Note non trouvée");
+      }
+
+      const rateDeleted = await rateService.deleteRate(id);
+
+      if (!rateDeleted) {
+        throw new Error("Échec lors de la suppresion de la note");
+      }
+
+      res.status(201).send({ success: "Note supprimée avec succès" });
+    } catch (error: any) {
+      const statusCode = error.statusCode || 500;
+      res.status(statusCode).send({ error: error.message });
+    }
+  }
+);
+
 export default router;
